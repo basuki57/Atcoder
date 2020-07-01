@@ -6,14 +6,17 @@ ll a[200005], b[200005];
 void solve(){
     ll n, m, t, cnt = 0;
     cin >> n >> m >> t;
-    for(ll i = 0; i < n; i++) cin >> a[i], a[i] += a[i-1];
-    for(ll i = 0; i < m; i++) cin >> b[i], b[i] += b[i-1];
-    for(ll i = 0; i < n; i++){
-        ll x = t - a[i];
-        ll y = upper_bound(b, b+m, x) - b;
-        ll xx = (x >= 0 ? i+1:0);
-        ll yy = (y > 0 ? y:0);
-        cnt = max(cnt, xx+ yy);
+    for(ll i = 1; i <= n; i++) cin >> a[i], a[i] += a[i-1];
+    for(ll i = 1; i <= m; i++) cin >> b[i], b[i] += b[i-1];
+    ll j = m;
+    for(ll i = 0; i <= n; i++){
+        ll f = 0;
+        while(b[j] + a[i] > t){
+            --j;
+            if(j < 0) {f = 10; break;}
+        }
+        if(f) break;
+        cnt = max(cnt, i + j);
     }
     cout << cnt << endl;
 }
